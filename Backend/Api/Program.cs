@@ -15,7 +15,11 @@ builder.Services.AddControllers().AddNewtonsoftJson(x => x.SerializerSettings.Re
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-
+builder.Services.AddDbContext<DataBaseContext>((options) =>
+{
+});
+builder.Services.AddScoped<IJtAuth, Auth>();
+builder.Services.AddScoped<IUsuarios, Usuarios>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -26,7 +30,12 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
+app.UseCors(x => x
+             .AllowAnyMethod()
+             .AllowAnyHeader()
+             //.WithHeaders("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept")
+             .SetIsOriginAllowed(origin => true) // allow any origin
+             .AllowCredentials());
 app.UseAuthorization();
 
 app.MapControllers();

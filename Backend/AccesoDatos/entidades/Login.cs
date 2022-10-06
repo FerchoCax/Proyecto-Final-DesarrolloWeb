@@ -20,7 +20,6 @@ namespace AccesoDatos
         public string token { get; set; } 
         public string?  Nombres { get; set; }
         public string? apellidos { get; set; }
-        public string tipo { get; set; }
      
     }
 }

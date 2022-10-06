@@ -22,9 +22,9 @@ namespace Servicios.Servicios
             _context = ctx; 
         }
 
-        public string Autentication(string username, string password, string tipo)
+        public string Autentication(string username, string password)
         {
-            if (!ValidateUser(username, password, tipo))
+            if (!ValidateUser(username, password))
             {
                 return null;
             }
@@ -47,32 +47,21 @@ namespace Servicios.Servicios
                 return (TokenHandler.WriteToken(token));
             }
         }
-        public bool ValidateUser(string usuario, string password, string tipo)
+        public bool ValidateUser(string usuario, string password)
         {
             string pasw = Encrypt.GetSHA256(password);
-            if(tipo == "C")
-            {
+            
                 var user = _context.Usuarios.Where(u => u.Username == usuario && u.Password == pasw).FirstOrDefault();
 
                 if (user != null)
                 {
                     return true;
                 }
-            }
-            else if(tipo == "U")
-            {
-                var user = _context.Usuarios.Where(u => u.Username == usuario && u.Password == pasw).FirstOrDefault();
-                if (user != null)
-                {
-                    return true;
-                }
-            }
-            
             return false;
         }
-        public LoginReturn GetUser(string usuario, string password, string tipo)
+        public LoginReturn GetUser(string usuario, string password)
         {
-            if (ValidateUser(usuario, password,tipo))
+            if (ValidateUser(usuario, password))
             {
                 string[] rolList = { };
                 return new LoginReturn { roles = rolList, username = usuario };

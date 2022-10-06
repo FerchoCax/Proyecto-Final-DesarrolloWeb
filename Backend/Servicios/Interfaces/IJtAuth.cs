@@ -9,7 +9,7 @@ namespace Servicios.Interfaces
 {
     public interface IJtAuth
     {
-        public string Autentication(string username, string password, string tipo);
-        public LoginReturn GetUser(string username, string password, string tipo);
+        public string Autentication(string username, string password);
+        public LoginReturn GetUser(string username, string password);
     }
 }
