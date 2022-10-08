@@ -20,6 +20,7 @@ builder.Services.AddDbContext<DataBaseContext>((options) =>
 });
 builder.Services.AddScoped<IJtAuth, Auth>();
 builder.Services.AddScoped<IUsuarios, Usuarios>();
+builder.Services.AddScoped<IProductos, Productos>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
