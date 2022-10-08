@@ -24,6 +24,7 @@ builder.Services.AddScoped<IProductos, Productos>();
 builder.Services.AddScoped<IRoles,Roles>();
 builder.Services.AddScoped<ISucursal, Sucursales>();
 builder.Services.AddScoped<IRolesUser, RolesUser>();
+builder.Services.AddScoped<IDepartamentosMunicipios, DepartamentosMunicipios>();
 
 
 var app = builder.Build();

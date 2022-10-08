@@ -7,8 +7,8 @@ namespace Api.Controllers
     [Route("[controller]")]
     public class RolesUsuarioController : Controller
     {
-        private readonly IRolesUsuario _rolesUsuario;
-        public RolesUsuarioController(IRolesUsuario roles)
+        private readonly IRolesUser _rolesUsuario;
+        public RolesUsuarioController(IRolesUser roles)
         {
             _rolesUsuario = roles;
         }
