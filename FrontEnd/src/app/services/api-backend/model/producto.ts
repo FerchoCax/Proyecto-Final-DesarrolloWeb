@@ -19,9 +19,12 @@ export interface Producto {
     idProducto?: number;
     nombre?: string | null;
     imagen?: string | null;
+    nombrearchivo?: string | null;
+    archivobase64?: string | null;
     lotes?: Array<Lote> | null;
     medicamentosCasos?: Array<MedicamentosCaso> | null;
     medicamentosReceta?: Array<MedicamentosRecetum> | null;
     productosFacturas?: Array<ProductosFactura> | null;
 }
+
 
