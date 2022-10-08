@@ -43,7 +43,7 @@ namespace Servicios.Servicios
 
         public Google.Apis.Storage.v1.Data.Object SubirProducto(string base64File, string fileName)
         {
-            GoogleCredential _credential = GoogleCredential.FromFile("fluent-observer-362922-a91f1ce14b90.json");
+            GoogleCredential _credential = GoogleCredential.FromFile("file.json");
             var storage = StorageClient.Create(_credential);
             byte[] buffer = Convert.FromBase64String(base64File);
             MemoryStream stream = new MemoryStream(buffer);
