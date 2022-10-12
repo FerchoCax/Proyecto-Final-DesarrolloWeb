@@ -54,6 +54,7 @@ import { MatTreeModule } from '@angular/material/tree';
 import { BlockCopyPasteDirective } from './directives/block-copy-paste.directive';
 import { UsuariosComponent } from './components/usuarios/usuarios.component';
 import { CrearUsuarioComponent } from './components/usuarios/crear-usuario/crear-usuario.component';
+import { SucursalesComponent } from './components/sucursales/sucursales.component';
 
 @NgModule({
   declarations: [
@@ -65,6 +66,7 @@ import { CrearUsuarioComponent } from './components/usuarios/crear-usuario/crear
     BlockCopyPasteDirective,
     UsuariosComponent,
     CrearUsuarioComponent,
+    SucursalesComponent,
   ],
   entryComponents: [],
   imports: [
