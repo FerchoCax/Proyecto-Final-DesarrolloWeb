@@ -31,6 +31,7 @@ namespace Servicios.Servicios
                     return _error.respuestaDeError("El rol '"+rol.Nombre+"' ya existe");
                 }
                 Role rolNuevo = new Role();
+                rolNuevo.Nombre = rol.Nombre;   
                 rolNuevo.Estado = "A";
                 _context.Roles.Add(rolNuevo);
                 await _context.SaveChangesAsync();

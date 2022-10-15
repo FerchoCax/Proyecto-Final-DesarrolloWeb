@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Usuario, UsuariosService } from 'src/app/services/api-backend';
+import { DepartamentosMunicipiosService } from 'src/app/services/api-backend/api/departamentosMunicipios.service';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -15,7 +16,7 @@ export class CrearUsuarioComponent implements OnInit {
   fechaNacimiento:string='';
   username:string='';
   tipoUser:string='-';
-  constructor(private userService:UsuariosService) { }
+  constructor(private userService:UsuariosService,private servicioDeps:DepartamentosMunicipiosService) { }
 
   ngOnInit(): void {
   }
@@ -35,7 +36,7 @@ export class CrearUsuarioComponent implements OnInit {
       password:  this.contras,
       idTipoUsuario: Number.parseInt(this.tipoUser) 
     }
-
+    
     this.userService.crearUsuarioPost(user)
     .subscribe(result =>{
       if(result.estado == 1){
