@@ -4,6 +4,7 @@ import { LoginComponent } from './components/login/login.component';
 import { HomeLayoutComponent } from './layouts/home-layout/home-layout.component';
 import { AuthGuard } from './helpers/auth.guard';
 import { UsuariosComponent } from './components/usuarios/usuarios.component';
+import { SucursalesComponent } from './components/sucursales/sucursales.component';
 import { ProductosComponent } from './components/productos/productos.component';
 import { RolesComponent } from './components/roles/roles.component';
 
@@ -17,6 +18,10 @@ const routes: Routes = [
         path:'Usuarios',
         canActivate:[AuthGuard],
         component:UsuariosComponent
+      },
+      {
+        path: 'Sucursales',
+        component:SucursalesComponent
       }, 
       {
         path:'productos',
@@ -26,8 +31,10 @@ const routes: Routes = [
         path:'Roles',
         component:RolesComponent
       }
+
     ]
-  }, 
+  
+  },
   {
     path: 'login',
     component: LoginComponent

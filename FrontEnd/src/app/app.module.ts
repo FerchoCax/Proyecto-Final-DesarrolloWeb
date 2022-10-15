@@ -54,6 +54,7 @@ import { MatTreeModule } from '@angular/material/tree';
 import { BlockCopyPasteDirective } from './directives/block-copy-paste.directive';
 import { UsuariosComponent } from './components/usuarios/usuarios.component';
 import { CrearUsuarioComponent } from './components/usuarios/crear-usuario/crear-usuario.component';
+import { SucursalesComponent } from './components/sucursales/sucursales.component';
 import { ProductosComponent } from './components/productos/productos.component';
 import { RolesComponent } from './components/roles/roles.component';
 import { CrearRolesComponent } from './components/roles/crear-roles/crear-roles.component';
@@ -71,6 +72,7 @@ import { RolesUsuarioComponent } from './components/roles/roles-usuario/roles-us
     BlockCopyPasteDirective,
     UsuariosComponent,
     CrearUsuarioComponent,
+    SucursalesComponent,
     ProductosComponent,
     RolesComponent,
     CrearRolesComponent,
