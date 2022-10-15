@@ -4,6 +4,8 @@ import { LoginComponent } from './components/login/login.component';
 import { HomeLayoutComponent } from './layouts/home-layout/home-layout.component';
 import { AuthGuard } from './helpers/auth.guard';
 import { UsuariosComponent } from './components/usuarios/usuarios.component';
+import { RolesComponent } from './components/roles/roles.component';
+
 
 const routes: Routes = [
   {
@@ -15,9 +17,13 @@ const routes: Routes = [
         path:'Usuarios',
         canActivate:[AuthGuard],
         component:UsuariosComponent
+      },
+      {
+        path:'Roles',
+        component:RolesComponent
       }
     ]
-  },
+  }, 
   {
     path: 'login',
     component: LoginComponent    
@@ -25,7 +31,7 @@ const routes: Routes = [
   { 
     path: '**', 
     redirectTo: '' 
-  }
+  }  
 ];
 
 @NgModule({
