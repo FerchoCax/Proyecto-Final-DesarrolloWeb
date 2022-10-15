@@ -55,6 +55,11 @@ import { BlockCopyPasteDirective } from './directives/block-copy-paste.directive
 import { UsuariosComponent } from './components/usuarios/usuarios.component';
 import { CrearUsuarioComponent } from './components/usuarios/crear-usuario/crear-usuario.component';
 import { ProductosComponent } from './components/productos/productos.component';
+import { RolesComponent } from './components/roles/roles.component';
+import { CrearRolesComponent } from './components/roles/crear-roles/crear-roles.component';
+import { RolesUsuarioComponent } from './components/roles/roles-usuario/roles-usuario.component';
+
+
 
 @NgModule({
   declarations: [
@@ -67,6 +72,9 @@ import { ProductosComponent } from './components/productos/productos.component';
     UsuariosComponent,
     CrearUsuarioComponent,
     ProductosComponent,
+    RolesComponent,
+    CrearRolesComponent,
+    RolesUsuarioComponent
   ],
   entryComponents: [],
   imports: [
