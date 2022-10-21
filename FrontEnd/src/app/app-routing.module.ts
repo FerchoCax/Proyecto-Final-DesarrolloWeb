@@ -7,6 +7,8 @@ import { UsuariosComponent } from './components/usuarios/usuarios.component';
 import { SucursalesComponent } from './components/sucursales/sucursales.component';
 import { ProductosComponent } from './components/productos/productos.component';
 import { RolesComponent } from './components/roles/roles.component';
+import { BodegasComponent } from './components/bodegas/bodegas.component';
+import { LotesComponent } from './components/lotes/lotes.component';
 
 const routes: Routes = [
   {
@@ -30,8 +32,15 @@ const routes: Routes = [
       {
         path:'Roles',
         component:RolesComponent
+      },
+      {
+        path:'Bodegas',
+        component: BodegasComponent
+      }, 
+      {
+        path:'Lotesitos',
+        component: LotesComponent
       }
-
     ]
   
   },

@@ -59,6 +59,8 @@ import { ProductosComponent } from './components/productos/productos.component';
 import { RolesComponent } from './components/roles/roles.component';
 import { CrearRolesComponent } from './components/roles/crear-roles/crear-roles.component';
 import { RolesUsuarioComponent } from './components/roles/roles-usuario/roles-usuario.component';
+import { BodegasComponent } from './components/bodegas/bodegas.component';
+import { LotesComponent } from './components/lotes/lotes.component';
 
 
 
@@ -76,7 +78,9 @@ import { RolesUsuarioComponent } from './components/roles/roles-usuario/roles-us
     ProductosComponent,
     RolesComponent,
     CrearRolesComponent,
-    RolesUsuarioComponent
+    RolesUsuarioComponent,
+    BodegasComponent,
+    LotesComponent
   ],
   entryComponents: [],
   imports: [
