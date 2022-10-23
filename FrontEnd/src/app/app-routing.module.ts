@@ -9,6 +9,10 @@ import { ProductosComponent } from './components/productos/productos.component';
 import { RolesComponent } from './components/roles/roles.component';
 import { BodegasComponent } from './components/bodegas/bodegas.component';
 import { LotesComponent } from './components/lotes/lotes.component';
+import { PacientesComponent } from './components/pacientes/pacientes.component';
+import { AsignacionCamaComponent } from './components/asignacion-cama/asignacion-cama.component';
+import { CamasComponent } from './components/camas/camas.component';
+import { HabitacionesComponent } from './components/habitaciones/habitaciones.component';
 
 const routes: Routes = [
   {
@@ -40,6 +44,22 @@ const routes: Routes = [
       {
         path:'Lotesitos',
         component: LotesComponent
+      }, 
+      {
+        path:'Pacientes',
+        component:PacientesComponent
+      },
+      {
+        path:'AsignacionCama',
+        component:AsignacionCamaComponent
+      },
+      {
+        path:'Camas',
+        component:CamasComponent
+      },
+      {
+        path:'Habitaciones',
+        component:HabitacionesComponent
       }
     ]
   

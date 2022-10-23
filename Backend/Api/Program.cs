@@ -16,8 +16,7 @@ builder.Services.AddControllers().AddNewtonsoftJson(x => x.SerializerSettings.Re
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<DataBaseContext>((options) =>
-{
-});
+{});
 builder.Services.AddScoped<IJtAuth, Auth>();
 builder.Services.AddScoped<IUsuarios, Usuarios>();
 builder.Services.AddScoped<IProductos, Productos>();
@@ -28,6 +27,8 @@ builder.Services.AddScoped<IDepartamentosMunicipios, DepartamentosMunicipios>();
 builder.Services.AddScoped<IClinicas,Clinicas>();
 builder.Services.AddScoped<ICamas,Camas>();
 builder.Services.AddScoped<IIBodegasLotes,LotesBodegas>();
+builder.Services.AddScoped<IPacientes,Pacientes>();
+builder.Services.AddScoped<IClientes, Clientes>();
 
 
 var app = builder.Build();

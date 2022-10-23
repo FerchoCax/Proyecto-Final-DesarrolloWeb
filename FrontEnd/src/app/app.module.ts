@@ -61,6 +61,11 @@ import { CrearRolesComponent } from './components/roles/crear-roles/crear-roles.
 import { RolesUsuarioComponent } from './components/roles/roles-usuario/roles-usuario.component';
 import { BodegasComponent } from './components/bodegas/bodegas.component';
 import { LotesComponent } from './components/lotes/lotes.component';
+import { PacientesComponent } from './components/pacientes/pacientes.component';
+import { AsignacionCamaComponent } from './components/asignacion-cama/asignacion-cama.component';
+import { CamasComponent } from './components/camas/camas.component';
+import { DashboardCamasComponent } from './components/dashboard-camas/dashboard-camas.component';
+import { HabitacionesComponent } from './components/habitaciones/habitaciones.component';
 
 
 
@@ -81,6 +86,11 @@ import { LotesComponent } from './components/lotes/lotes.component';
     RolesUsuarioComponent,
     BodegasComponent,
     LotesComponent
+    PacientesComponent,
+    AsignacionCamaComponent,
+    CamasComponent,
+    DashboardCamasComponent,
+    HabitacionesComponent
   ],
   entryComponents: [],
   imports: [
