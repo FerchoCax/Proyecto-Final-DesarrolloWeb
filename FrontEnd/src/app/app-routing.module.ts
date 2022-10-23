@@ -7,6 +7,8 @@ import { UsuariosComponent } from './components/usuarios/usuarios.component';
 import { SucursalesComponent } from './components/sucursales/sucursales.component';
 import { ProductosComponent } from './components/productos/productos.component';
 import { RolesComponent } from './components/roles/roles.component';
+import { BodegasComponent } from './components/bodegas/bodegas.component';
+import { LotesComponent } from './components/lotes/lotes.component';
 import { PacientesComponent } from './components/pacientes/pacientes.component';
 import { AsignacionCamaComponent } from './components/asignacion-cama/asignacion-cama.component';
 import { CamasComponent } from './components/camas/camas.component';
@@ -36,6 +38,14 @@ const routes: Routes = [
         component:RolesComponent
       },
       {
+        path:'Bodegas',
+        component: BodegasComponent
+      }, 
+      {
+        path:'Lotesitos',
+        component: LotesComponent
+      }, 
+      {
         path:'Pacientes',
         component:PacientesComponent
       },
@@ -51,7 +61,6 @@ const routes: Routes = [
         path:'Habitaciones',
         component:HabitacionesComponent
       }
-
     ]
   
   },
