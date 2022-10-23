@@ -59,6 +59,11 @@ import { ProductosComponent } from './components/productos/productos.component';
 import { RolesComponent } from './components/roles/roles.component';
 import { CrearRolesComponent } from './components/roles/crear-roles/crear-roles.component';
 import { RolesUsuarioComponent } from './components/roles/roles-usuario/roles-usuario.component';
+import { PacientesComponent } from './components/pacientes/pacientes.component';
+import { AsignacionCamaComponent } from './components/asignacion-cama/asignacion-cama.component';
+import { CamasComponent } from './components/camas/camas.component';
+import { DashboardCamasComponent } from './components/dashboard-camas/dashboard-camas.component';
+import { HabitacionesComponent } from './components/habitaciones/habitaciones.component';
 
 
 
@@ -76,7 +81,12 @@ import { RolesUsuarioComponent } from './components/roles/roles-usuario/roles-us
     ProductosComponent,
     RolesComponent,
     CrearRolesComponent,
-    RolesUsuarioComponent
+    RolesUsuarioComponent,
+    PacientesComponent,
+    AsignacionCamaComponent,
+    CamasComponent,
+    DashboardCamasComponent,
+    HabitacionesComponent
   ],
   entryComponents: [],
   imports: [
