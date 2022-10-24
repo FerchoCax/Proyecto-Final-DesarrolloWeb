@@ -5,12 +5,16 @@ using Servicios.Interfaces;
 using Servicios.Servicios;
 using System.Text;
 using Microsoft.AspNetCore.Mvc.NewtonsoftJson;
-
+using Api.Hubs;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
+builder.Services.AddSignalR(e => {
+    e.MaximumReceiveMessageSize = 102400000;
+    e.EnableDetailedErrors = true;
+});
 builder.Services.AddControllers().AddNewtonsoftJson(x => x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore); ;
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -48,7 +52,16 @@ app.UseCors(x => x
              .SetIsOriginAllowed(origin => true) // allow any origin
              .AllowCredentials());
 app.UseAuthorization();
-
+app.UseRouting();
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapGet("/", async context =>
+    {
+        await context.Response.WriteAsync("Version 0.1");
+    });
+    endpoints.MapControllers();//.RequireAuthorization();
+    endpoints.MapHub<HubCamasController>("/hub/Camas");
+});
 app.MapControllers();
 
 app.Run();

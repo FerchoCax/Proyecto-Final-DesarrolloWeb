@@ -23,7 +23,9 @@ namespace Api.Controllers
         [HttpGet("GetPaciente")]
         public async Task<IActionResult> GetPaciente(string nombre)
         {
-            return await _paciente.GetPaciente(nombre);
+            var x  = await _paciente.GetPaciente(nombre);
+            var z = x.GetType().ToString();
+            return x;
         }
 
         [HttpPost("CrearCaso")]
