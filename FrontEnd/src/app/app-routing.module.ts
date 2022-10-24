@@ -13,6 +13,7 @@ import { PacientesComponent } from './components/pacientes/pacientes.component';
 import { AsignacionCamaComponent } from './components/asignacion-cama/asignacion-cama.component';
 import { CamasComponent } from './components/camas/camas.component';
 import { HabitacionesComponent } from './components/habitaciones/habitaciones.component';
+import { DashboardCamasComponent } from './components/dashboard-camas/dashboard-camas.component';
 
 const routes: Routes = [
   {
@@ -60,6 +61,9 @@ const routes: Routes = [
       {
         path:'Habitaciones',
         component:HabitacionesComponent
+      },{
+        path:'DashBoardCamas',
+        component:DashboardCamasComponent
       }
     ]
   

@@ -85,7 +85,7 @@ import { HabitacionesComponent } from './components/habitaciones/habitaciones.co
     CrearRolesComponent,
     RolesUsuarioComponent,
     BodegasComponent,
-    LotesComponent
+    LotesComponent,
     PacientesComponent,
     AsignacionCamaComponent,
     CamasComponent,

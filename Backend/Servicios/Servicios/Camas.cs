@@ -9,14 +9,13 @@ using Newtonsoft.Json.Linq;
 using Servicios.Interfaces;
 using AccesoDatos;
 using Microsoft.EntityFrameworkCore;
-
+using Microsoft.AspNetCore.SignalR;
 namespace Servicios.Servicios{
 
     public  class Camas:ICamas
     {
         private readonly DataBaseContext _dataBaseContext;
         private readonly Errores _error;
-
         public Camas(DataBaseContext ctx){
             _dataBaseContext = ctx;
             _error = new Errores();
@@ -76,8 +75,11 @@ namespace Servicios.Servicios{
             try
             {
                 _dataBaseContext.AsignacionesCamas.Add(asignacion);
+                var camas = await _dataBaseContext.Habitaciones.Where(e => e.IdSucursal == asignacion.IdAsignacionCama)
+                    .ToListAsync();
                 await _dataBaseContext.SaveChangesAsync();
-                return new ObjectResult(new {estado = 1}){StatusCode = 200};
+
+                return new ObjectResult(new { estado = 1 }){StatusCode = 200};
             }
             catch(Exception ex)
             {
