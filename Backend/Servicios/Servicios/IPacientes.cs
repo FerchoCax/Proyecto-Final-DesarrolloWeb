@@ -92,5 +92,31 @@ namespace Servicios.Servicios
                 return _error.respuestaDeError("", ex);
             }
         }
+
+        public async Task<IActionResult> ListarPacientesCasoAbierto(string nombre)
+        {
+            try
+            {
+                var clientes = await (from casos in _dataBaseContext.Casos
+                                      join paciente in _dataBaseContext.Pacientes on casos.IdPaciente equals paciente.IdPaciente
+                                      where
+                                      casos.MotivoFinalizacion == null
+                                      && casos.FechaFin == null
+                                      && paciente.Nombres.ToUpper().Contains(nombre.ToUpper())
+                                      select new
+                                      {
+                                          paciente,
+                                          casos.IdCaso
+                                      }).ToListAsync();
+
+                return new ObjectResult(clientes) { StatusCode = 200 };
+
+
+            }
+            catch (Exception ex)
+            {
+                return _error.respuestaDeError("", ex);
+            }
+        }
     }
 }

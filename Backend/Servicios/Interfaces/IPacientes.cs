@@ -15,5 +15,6 @@ namespace Servicios.Interfaces
         Task<IActionResult> CrearCaso(Caso caso);
         Task<IActionResult> ListarCasosPaciente(int idPaciente);
         Task<IActionResult> CerrarCaso(Caso caso);
+        Task<IActionResult> ListarPacientesCasoAbierto(string nombre);
     }
 }

@@ -46,5 +46,11 @@ namespace Api.Controllers
         {
             return await _paciente.CerrarCaso(caso);
         }
+
+        [HttpGet("BuscarPacienteCasoAbierto")]
+        public async Task<IActionResult> BuscarPacienteCasoAbierto(string nombre)
+        {
+            return await _paciente.ListarPacientesCasoAbierto(nombre);
+        }
     }
 }
