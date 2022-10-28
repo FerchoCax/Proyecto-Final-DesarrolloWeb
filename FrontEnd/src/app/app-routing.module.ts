@@ -14,6 +14,7 @@ import { AsignacionCamaComponent } from './components/asignacion-cama/asignacion
 import { CamasComponent } from './components/camas/camas.component';
 import { HabitacionesComponent } from './components/habitaciones/habitaciones.component';
 import { DashboardCamasComponent } from './components/dashboard-camas/dashboard-camas.component';
+import { ClinicasComponent } from './components/clinicas/clinicas.component';
 
 const routes: Routes = [
   {
@@ -29,7 +30,7 @@ const routes: Routes = [
       {
         path: 'Sucursales',
         component:SucursalesComponent
-      }, 
+      },
       {
         path:'productos',
         component:ProductosComponent
@@ -41,11 +42,11 @@ const routes: Routes = [
       {
         path:'Bodegas',
         component: BodegasComponent
-      }, 
+      },
       {
         path:'Lotesitos',
         component: LotesComponent
-      }, 
+      },
       {
         path:'Pacientes',
         component:PacientesComponent
@@ -65,8 +66,14 @@ const routes: Routes = [
         path:'DashBoardCamas',
         component:DashboardCamasComponent
       }
+      ,
+      {
+        path:'clinicas',
+        component:ClinicasComponent
+
+      }
     ]
-  
+
   },
   {
     path: 'login',
