@@ -8,6 +8,7 @@ using Newtonsoft.Json.Linq;
 using Servicios.Interfaces;
 using Servicios.Servicios;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace Api.Controllers
 {
@@ -34,6 +35,15 @@ namespace Api.Controllers
             {
                 _dataBaseContext.Camas.Add(cama);
                 await _dataBaseContext.SaveChangesAsync();
+                var habitacion = await (from camaa in _dataBaseContext.Camas
+                                        join habitaciones in _dataBaseContext.Habitaciones on camaa.IdHabitacion equals habitaciones.IdHabitacion
+                                        where
+                                        cama.IdCama == cama.IdCama
+                                        select
+                                        habitaciones
+                                     ).FirstOrDefaultAsync();
+                await _dataBaseContext.SaveChangesAsync();
+                await RecargarHubAsync(habitacion.IdSucursal);
                 return new ObjectResult(new { estado = 1 }) { StatusCode = 200 };
             }
             catch (Exception ex)
@@ -73,6 +83,7 @@ namespace Api.Controllers
                                           habitacion
                                         ).Include(n => n.IdTipoHabitacionNavigation)
                                         .ToListAsync();
+
                 return new ObjectResult(habitaciones) { StatusCode = 200 };
             }
             catch (Exception ex)
@@ -86,9 +97,16 @@ namespace Api.Controllers
             try
             {
                 _dataBaseContext.AsignacionesCamas.Add(asignacion);
-                var camas = await _dataBaseContext.Habitaciones.Where(e => e.IdSucursal == asignacion.IdAsignacionCama)
-                    .ToListAsync();
+                var habitacion = await (from cama in _dataBaseContext.Camas
+                                      join habitaciones in _dataBaseContext.Habitaciones on cama.IdHabitacion equals habitaciones.IdHabitacion
+                                      where
+                                      cama.IdCama == asignacion.IdCama
+                                      select
+                                      habitaciones
+                                      ).FirstOrDefaultAsync();
                 await _dataBaseContext.SaveChangesAsync();
+                await RecargarHubAsync(habitacion.IdSucursal);
+                
                 return new ObjectResult(new { estado = 1 }) { StatusCode = 200 };
             }
             catch(Exception ex)
@@ -101,13 +119,16 @@ namespace Api.Controllers
         {
             try
             {
-                var asignacion = await _dataBaseContext.AsignacionesCamas.FirstOrDefaultAsync(e => e.IdCama == idCama && e.IdAsignacionCama == idAsignacion);
+                var asignacion = await _dataBaseContext.AsignacionesCamas.Where(e => e.IdCama == idCama && e.IdAsignacionCama == idAsignacion)
+                    .Include(n => n.IdCamaNavigation)
+                    .ThenInclude(m => m.IdHabitacionNavigation).FirstOrDefaultAsync();
 
                 asignacion.FechaFin = fechaFin;
 
                 _dataBaseContext.Entry(asignacion).State = EntityState.Modified;
 
                 _dataBaseContext.SaveChanges();
+                await RecargarHubAsync(asignacion.IdCamaNavigation.IdHabitacionNavigation.IdSucursal);
 
                 return new ObjectResult(new { estado = 1 }) { StatusCode = 200 };
             }
@@ -123,6 +144,7 @@ namespace Api.Controllers
             {
                 _dataBaseContext.Habitaciones.Add(Habitacion);
                 await _dataBaseContext.SaveChangesAsync();
+                await RecargarHubAsync(Habitacion.IdSucursal);
                 return new ObjectResult(new { estado = 1 }) { StatusCode = 200 };
             }
             catch (Exception ex)
@@ -131,20 +153,16 @@ namespace Api.Controllers
             }
         }
         [HttpGet("SalasSucursal")]
-        public async Task<IActionResult> SalasSucursal(int idSucursal)
+        public async Task<IActionResult> SalasSucursal(string idSucursal)
         {
             try
             {
-                var x = await _dataBaseContext.Sucursales.Where(e => e.IdSucursal == 1)
-                            .Include(n => n.Habitaciones)
-                            .ThenInclude(m => m.Camas).ToListAsync();
-                string a =(JsonConvert.SerializeObject(x, new JsonSerializerSettings()
-                {
-                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore
-                }));
-
-                await _hubCamas.Clients.Groups("1").SendAsync("Nueva", a);
-                return new ObjectResult(a) { StatusCode = 200 };
+                int id = Convert.ToInt32(idSucursal);
+                var x = await _dataBaseContext.Sucursales.Where(e => e.IdSucursal == id)
+                          .Include(n => n.Habitaciones)
+                          .ThenInclude(m => m.Camas).ToListAsync();
+                await RecargarHubAsync(id);
+                return new ObjectResult(x) { StatusCode = 200 };
             }
             catch (Exception ex)
             {
@@ -215,6 +233,26 @@ namespace Api.Controllers
             {
                 return _error.respuestaDeError("", ex);
             }
+        }
+
+        private async Task RecargarHubAsync(int idSucursal)
+        {
+            var x = await _dataBaseContext.Sucursales.Where(e => e.IdSucursal == 1)
+                            .Include(n => n.Habitaciones)
+                            .ThenInclude(m => m.Camas).ToListAsync();
+            JsonSerializerOptions options = new()
+            {
+                ReferenceHandler = ReferenceHandler.IgnoreCycles,
+                WriteIndented = true
+            };
+            string jsonString = System.Text.Json.JsonSerializer.Serialize(x, options);
+
+            string a = (JsonConvert.SerializeObject(x, new JsonSerializerSettings()
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+            }));
+
+            await _hubCamas.Clients.Groups("1").SendAsync("Nueva", jsonString);
         }
     }
 }

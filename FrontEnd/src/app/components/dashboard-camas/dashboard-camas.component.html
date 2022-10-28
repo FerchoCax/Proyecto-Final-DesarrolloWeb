@@ -1,1 +1,26 @@
-<p>dashboard-camas works!</p>
+<div class="container-fluid">
+    <h1>DashBoard Camas</h1>
+    <div class="row">
+        <div class="col-md-2 espacio" >
+            <span> Sucursal: </span>
+        </div>
+        <div class="col-md-10 espacio">
+            <select Name="idsucursal" class="inputBasico" [(ngModel)]="IdSucursal" (ngModelChange)="CambioSucursal()" id="idsucursal">
+                <option value="-">Seleccione</option>
+                <option *ngFor= "let sucur of dataSucursal" value="{{sucur.idSucursal}}">{{sucur.nombre}}</option> 
+            </select>
+        </div>
+            
+        <div class="col-12" *ngIf="Sucursal != null && Sucursal != undefined">
+            <div class="col-md-4" *ngFor="let habi of Sucursal.habitaciones">
+                <span>Nombre Habitacion: {{habi.nombre}}</span>
+                <div class="row">
+                    <div class="col-12" *ngFor="let cam of habi.camas">
+                        <span>Nombre Cama: {{cam.nombre}}</span>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</div>

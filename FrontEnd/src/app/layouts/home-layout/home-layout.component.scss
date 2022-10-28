@@ -1,7 +1,9 @@
 :host{
     color: var(--primary-text-color);
 }
-
+.SoloBlanco{
+    color: white !important;
+}
 mat-toolbar {
     background:rgb(0, 30, 202) !important;
     height: 45px;

@@ -11,9 +11,10 @@ export class CamasSocketService {
     infoCamas = new Subject()
     camasSocket = null
     Sucursal:Sucursale;
+    iniciado:boolean = false;
     constructor(){}
     iniciar(idSucursal:string){
-        
+        this.iniciado = true;
         let id=idSucursal;
         let apiUrl = environment.apiUrl
         console.log('ApiUrl: '+apiUrl);
@@ -22,8 +23,8 @@ export class CamasSocketService {
         .withAutomaticReconnect()
         .build();
         this.camasSocket.on('Nueva', informacion =>{
-            console.log(informacion);
-
+            // console.log(informacion);
+            
             let objetoInfo = informacion
 
             this.infoCamas = objetoInfo
@@ -39,5 +40,6 @@ export class CamasSocketService {
           this.camasSocket.stop();
         
         this.camasSocket = null;
+        this.iniciado= false
       }
 }

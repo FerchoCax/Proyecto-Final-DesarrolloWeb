@@ -30,7 +30,6 @@ export class LotesComponent implements OnInit {
   ngOnInit(): void {
     this.cargarProductos()
     this.cargarSucursales()
-    this.crearLote()
     this.limpiarPantalla()
   }
   cargarProductos(){

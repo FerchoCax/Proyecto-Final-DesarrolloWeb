@@ -33,6 +33,7 @@ builder.Services.AddScoped<ICamas,Camas>();
 builder.Services.AddScoped<IIBodegasLotes,LotesBodegas>();
 builder.Services.AddScoped<IPacientes,Pacientes>();
 builder.Services.AddScoped<IClientes, Clientes>();
+builder.Services.AddScoped<IDiagnosticos, Diagnosticos>();
 
 
 var app = builder.Build();

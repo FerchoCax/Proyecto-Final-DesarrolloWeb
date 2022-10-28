@@ -331,7 +331,9 @@ div.route-button.selected {
 font-weight: initial !important;
 }
 
-
+span{
+  color: var(--primary-text-color)
+}
 div.ng-star-inserted > h3 {
 color: var(--primary-text-color);
 }
@@ -339,7 +341,10 @@ color: var(--primary-text-color);
 input.mat-input-element {
 background-color: var(--secondary-background-color) !important;
 }
+input{
+color: var(--primary-text-color);
 
+}
 input.mat-input-element::placeholder {
 
 color: var(--secondary-text-color) !important;
