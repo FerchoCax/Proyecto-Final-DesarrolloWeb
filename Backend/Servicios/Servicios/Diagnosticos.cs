@@ -37,6 +37,7 @@ namespace Servicios.Servicios
         {
             try
             {
+                diag.FechaInicio = DateTime.Now;
                 _dataBaseContext.DiagnosticosCasos.Add(diag);
                 await _dataBaseContext.SaveChangesAsync();
                 return new ObjectResult(new { estado = 1 }) { StatusCode = 200 };
