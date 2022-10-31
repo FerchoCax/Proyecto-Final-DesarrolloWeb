@@ -68,6 +68,7 @@ import { DashboardCamasComponent } from './components/dashboard-camas/dashboard-
 import { HabitacionesComponent } from './components/habitaciones/habitaciones.component';
 import { ClinicasComponent } from './components/clinicas/clinicas.component';
 import { DiagnosticosCasosComponent } from './components/diagnosticos-casos/diagnosticos-casos.component';
+import { CitasComponent } from './components/citas/citas.component';
 
 
 
@@ -95,6 +96,7 @@ import { DiagnosticosCasosComponent } from './components/diagnosticos-casos/diag
     HabitacionesComponent,
     ClinicasComponent,
     DiagnosticosCasosComponent
+    CitasComponent
   ],
   entryComponents: [],
   imports: [

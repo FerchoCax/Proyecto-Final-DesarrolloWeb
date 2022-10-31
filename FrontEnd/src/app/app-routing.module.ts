@@ -16,6 +16,7 @@ import { HabitacionesComponent } from './components/habitaciones/habitaciones.co
 import { DashboardCamasComponent } from './components/dashboard-camas/dashboard-camas.component';
 import { ClinicasComponent } from './components/clinicas/clinicas.component';
 import { DiagnosticosCasosComponent } from './components/diagnosticos-casos/diagnosticos-casos.component';
+import { CitasComponent } from './components/citas/citas.component';
 
 const routes: Routes = [
   {
@@ -71,6 +72,11 @@ const routes: Routes = [
       {
         path:'clinicas',
         component:ClinicasComponent
+
+      },
+      {
+        path:'AgendarCita',
+        component: CitasComponent
 
       }
       ,
