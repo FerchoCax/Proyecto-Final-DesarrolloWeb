@@ -15,23 +15,17 @@ export class CamasSocketService {
     constructor(){}
     iniciar(idSucursal:string){
         this.iniciado = true;
-        let id=idSucursal;
         let apiUrl = environment.apiUrl
-        console.log('ApiUrl: '+apiUrl);
+        // console.log('ApiUrl: '+apiUrl);
 
-        this.camasSocket = new signalR.HubConnectionBuilder().withUrl(apiUrl+'/hub/Camas')
-        .withAutomaticReconnect()
-        .build();
+        this.camasSocket = new signalR.HubConnectionBuilder().withUrl(apiUrl+'/hub/Camas').withAutomaticReconnect().build();
         this.camasSocket.on('Nueva', informacion =>{
-            // console.log(informacion);
-            
-            let objetoInfo = informacion
-
-            this.infoCamas = objetoInfo
+            let objetoInfo = JSON.parse(informacion)
+            this.infoCamas.next(objetoInfo)
         })
         
         this.camasSocket.start().then(() => {
-            this.camasSocket.invoke('UnirseAlGrupo', id);      
+            this.camasSocket.invoke('UnirseAlGrupo',idSucursal);      
           })
           ;
     }

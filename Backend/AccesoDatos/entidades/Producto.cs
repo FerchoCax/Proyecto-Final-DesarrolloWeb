@@ -17,9 +17,9 @@ namespace AccesoDatos
 
         public int IdProducto { get; set; }
         public string Nombre { get; set; }
-        public string Imagen { get; set; }
-        public string Nombrearchivo { get; set; }
-        public string Archivobase64 { get; set; }
+        public string? Imagen { get; set; }
+        public string? Nombrearchivo { get; set; }
+        public string? Archivobase64 { get; set; }
 
         public virtual ICollection<Lote> Lotes { get; set; }
         public virtual ICollection<MedicamentosCaso> MedicamentosCasos { get; set; }

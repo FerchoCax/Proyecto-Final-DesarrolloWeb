@@ -46,8 +46,17 @@ td,
   border: var(--border-color);
 }
 
-
-
+.mat-button-wrapper{
+  color: #fff !important;
+}
+.mat-paginator-icon{
+  color: var(--primary-text-color)
+}
+span{
+  
+  color: var(--primary-text-color)
+  
+}
 *::-webkit-scrollbar-thumb {
   background: rgb(0, 163, 95); 
 }
@@ -331,9 +340,7 @@ div.route-button.selected {
 font-weight: initial !important;
 }
 
-span{
-  color: var(--primary-text-color)
-}
+
 div.ng-star-inserted > h3 {
 color: var(--primary-text-color);
 }
@@ -395,7 +402,9 @@ color: var(--primary-text-color) !important;
 font-weight: initial !important;
 }
 
-
+button{
+  color: #fff !important;
+}
 .mat-focus-indicator.mat-button.mat-button-base {
 
 background-color: var(--pm-color) !important;
@@ -591,4 +600,7 @@ color: var(--primary-text-color) !important;
 
 .espacio{
   margin-top: 5px;
+}
+.textAreaBasico{
+  width:100%;  resize: none;border: solid 1px #707070; border-radius: 8px
 }

@@ -13,6 +13,7 @@ export class DashboardCamasComponent implements OnInit,OnDestroy {
   dataSucursal:Sucursale[]=[];
   IdSucursal:string = '-';
   Sucursal:Sucursale;
+  DataGeneral
   constructor(private socketCamas:CamasSocketService,
     private servicioSucursales: SucursalesService,
     private camaservices: CamaService) 
@@ -27,35 +28,33 @@ export class DashboardCamasComponent implements OnInit,OnDestroy {
   } 
   Dato:string = '----';
   CambioSucursal(){
-    if(this.IdSucursal =='-'){
+    try{
+      this.socketCamas.detener();
+    }catch(e){
+      console.log(e);
+    }
+    if(this.IdSucursal == '-'){
+      this.DataGeneral = null
       return
     }
-    this.camaservices.camaSalasSucursalGet(this.IdSucursal)
-    .subscribe(res =>{
-      this.Sucursal = <Sucursale>res[0]
-    },error =>{
-      console.log(error)
-    })
-    console.log(this.socketCamas)
-    if(this.socketCamas.iniciado){
-      this.socketCamas.detener();
-    }
-    console.log(this.socketCamas.iniciado)
-
     this.socketCamas.iniciar(this.IdSucursal)
-    console.log(this.socketCamas.iniciado)
-
-    console.log(this.socketCamas)
     this.socketCamas.infoCamas.subscribe(res =>{
-      console.log(res);
-      this.Sucursal = <Sucursale>res[0]
-      console.log(this.Sucursal);
-      
-      
-    },error=>{
-      console.log(error);
+      let datoTem:any[] =<any[]> res
+      if(datoTem.length == 0){
+
+      }else{
+        this.DataGeneral = <any[]>res
+        console.log(this.DataGeneral);
+      }
       
     })
+    this.camaservices.camaSalasSucursalGet(this.IdSucursal)
+    .subscribe(rest =>{
+      
+    },error =>{
+      this.socketCamas.detener();
+    })
+    
    
   }
   
@@ -71,6 +70,14 @@ export class DashboardCamasComponent implements OnInit,OnDestroy {
 
   ngOnDestroy(){
     this.socketCamas.detener();
+  }
+
+  cantidadCamasHabitacion(habi){
+    if(habi.Camas.length == 0){
+      return "0"
+    }
+    let cantidad = habi.Camas.filter(e => e.AsignacionesCamas.length==0).length;
+    return cantidad+'/'+habi.Camas.length
   }
 
 }

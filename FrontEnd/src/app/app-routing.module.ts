@@ -17,6 +17,7 @@ import { DashboardCamasComponent } from './components/dashboard-camas/dashboard-
 import { ClinicasComponent } from './components/clinicas/clinicas.component';
 import { DiagnosticosCasosComponent } from './components/diagnosticos-casos/diagnosticos-casos.component';
 import { CitasComponent } from './components/citas/citas.component';
+import { IngresarCitaComponent } from './components/ingresar-cita/ingresar-cita.component';
 
 const routes: Routes = [
   {
@@ -84,6 +85,9 @@ const routes: Routes = [
         path:'diagnosticos',
         component:DiagnosticosCasosComponent
 
+      },{
+        path:'IngresarCita',
+        component:IngresarCitaComponent
       }
     ]
 

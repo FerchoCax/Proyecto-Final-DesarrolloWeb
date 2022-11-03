@@ -35,15 +35,9 @@ namespace Api.Controllers
             {
                 _dataBaseContext.Camas.Add(cama);
                 await _dataBaseContext.SaveChangesAsync();
-                var habitacion = await (from camaa in _dataBaseContext.Camas
-                                        join habitaciones in _dataBaseContext.Habitaciones on camaa.IdHabitacion equals habitaciones.IdHabitacion
-                                        where
-                                        cama.IdCama == cama.IdCama
-                                        select
-                                        habitaciones
-                                     ).FirstOrDefaultAsync();
-                await _dataBaseContext.SaveChangesAsync();
-                await RecargarHubAsync(habitacion.IdSucursal);
+                var x = await _dataBaseContext.Habitaciones.Where(e => e.IdHabitacion == cama.IdHabitacion).FirstOrDefaultAsync();
+
+                await RecargarHubAsync(x.IdSucursal.ToString());
                 return new ObjectResult(new { estado = 1 }) { StatusCode = 200 };
             }
             catch (Exception ex)
@@ -96,16 +90,15 @@ namespace Api.Controllers
         {
             try
             {
+                
+                asignacion.FechaInicio = DateTime.Now;
                 _dataBaseContext.AsignacionesCamas.Add(asignacion);
-                var habitacion = await (from cama in _dataBaseContext.Camas
-                                      join habitaciones in _dataBaseContext.Habitaciones on cama.IdHabitacion equals habitaciones.IdHabitacion
-                                      where
-                                      cama.IdCama == asignacion.IdCama
-                                      select
-                                      habitaciones
-                                      ).FirstOrDefaultAsync();
                 await _dataBaseContext.SaveChangesAsync();
-                await RecargarHubAsync(habitacion.IdSucursal);
+
+                var x = await _dataBaseContext.Camas.Where(e => e.IdCama == asignacion.IdCama)
+                               .Include(n => n.IdHabitacionNavigation).FirstOrDefaultAsync();
+
+                await RecargarHubAsync(x.IdHabitacionNavigation.IdSucursal.ToString());
                 
                 return new ObjectResult(new { estado = 1 }) { StatusCode = 200 };
             }
@@ -128,7 +121,7 @@ namespace Api.Controllers
                 _dataBaseContext.Entry(asignacion).State = EntityState.Modified;
 
                 _dataBaseContext.SaveChanges();
-                await RecargarHubAsync(asignacion.IdCamaNavigation.IdHabitacionNavigation.IdSucursal);
+                await RecargarHubAsync(asignacion.IdCamaNavigation.IdHabitacionNavigation.IdSucursal.ToString());
 
                 return new ObjectResult(new { estado = 1 }) { StatusCode = 200 };
             }
@@ -144,7 +137,8 @@ namespace Api.Controllers
             {
                 _dataBaseContext.Habitaciones.Add(Habitacion);
                 await _dataBaseContext.SaveChangesAsync();
-                await RecargarHubAsync(Habitacion.IdSucursal);
+                await RecargarHubAsync(Habitacion.IdSucursal.ToString());
+
                 return new ObjectResult(new { estado = 1 }) { StatusCode = 200 };
             }
             catch (Exception ex)
@@ -157,12 +151,8 @@ namespace Api.Controllers
         {
             try
             {
-                int id = Convert.ToInt32(idSucursal);
-                var x = await _dataBaseContext.Sucursales.Where(e => e.IdSucursal == id)
-                          .Include(n => n.Habitaciones)
-                          .ThenInclude(m => m.Camas).ToListAsync();
-                await RecargarHubAsync(id);
-                return new ObjectResult(x) { StatusCode = 200 };
+                await RecargarHubAsync(idSucursal);
+                return new ObjectResult(1) { StatusCode = 200 };
             }
             catch (Exception ex)
             {
@@ -179,7 +169,9 @@ namespace Api.Controllers
                                    where habitacion.IdHabitacion == idHabitacion
                                    select
                                    cama
-                                  ).ToListAsync();
+                                  )
+                                  .Include(e => e.AsignacionesCamas.Where(e => e.FechaFin == null))
+                                  .ToListAsync();
                 return new ObjectResult(camas) { StatusCode = 200 };
             }
             catch (Exception ex)
@@ -235,11 +227,19 @@ namespace Api.Controllers
             }
         }
 
-        private async Task RecargarHubAsync(int idSucursal)
+        [HttpGet("prueba")]
+        public async Task<ActionResult> prueba(string info)
         {
-            var x = await _dataBaseContext.Sucursales.Where(e => e.IdSucursal == 1)
+            await RecargarHubAsync(info);
+            return new ObjectResult(1);
+        }
+
+        private async Task RecargarHubAsync(string id)
+        {
+            var x = await _dataBaseContext.Sucursales.Where(e => e.IdSucursal == Convert.ToInt32(id))
                             .Include(n => n.Habitaciones)
-                            .ThenInclude(m => m.Camas).ToListAsync();
+                            .ThenInclude(m => m.Camas)
+                            .ThenInclude(r => r.AsignacionesCamas.Where(j => j.FechaFin == null)).ToListAsync();
             JsonSerializerOptions options = new()
             {
                 ReferenceHandler = ReferenceHandler.IgnoreCycles,
@@ -247,12 +247,9 @@ namespace Api.Controllers
             };
             string jsonString = System.Text.Json.JsonSerializer.Serialize(x, options);
 
-            string a = (JsonConvert.SerializeObject(x, new JsonSerializerSettings()
-            {
-                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
-            }));
+           
 
-            await _hubCamas.Clients.Groups("1").SendAsync("Nueva", jsonString);
+            await _hubCamas.Clients.Groups(id).SendAsync("Nueva", jsonString);
         }
     }
 }

@@ -36,8 +36,11 @@ export class ProductosComponent implements OnInit {
     let stringbase64:string=this.archivobase64
     let producto:Producto={
       nombre:this.nombreproducto,
-      archivobase64:stringbase64.substring(('data:'+this.tipo+';base64,').length),
-      nombrearchivo:this.nombrearchivo
+      
+    }
+    if(this.nombrearchivo != ''){
+      producto.archivobase64=stringbase64.substring(('data:'+this.tipo+';base64,').length)
+      producto.nombrearchivo=this.nombrearchivo
     }
     this.servicosproductos.crearProductoPost(producto)
     .subscribe(res=>{

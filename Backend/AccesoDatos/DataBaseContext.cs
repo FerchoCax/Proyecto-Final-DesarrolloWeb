@@ -51,17 +51,26 @@ namespace AccesoDatos
         public virtual DbSet<TiposVentum> TiposVenta { get; set; }
         public virtual DbSet<Usuario> Usuarios { get; set; }
         public virtual DbSet<Venta> Ventas { get; set; }
-
+        public virtual DbSet<valores> valores { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseMySQL("Server=34.132.2.235;Database=db_clinica;Uid=Fernando;Pwd=marceline1;");
+                optionsBuilder.UseMySQL("Server=desaweb.mysql.database.azure.com;Database=db_clinica;Uid=fernando;Pwd=M@rceline12;");
             }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<valores>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.Property(e => e.key).HasColumnName("key");
+
+                entity.Property(e => e.valor).HasColumnName("valor");
+            });
+
             modelBuilder.Entity<AplicacionesMedicamento>(entity =>
             {
                 entity.HasKey(e => e.IdAplicacionMedicamento)
@@ -736,7 +745,7 @@ namespace AccesoDatos
                     .HasColumnName("observaciones");
 
                 entity.Property(e => e.UnidadMedida)
-                    .IsRequired()
+                    //.IsRequired()
                     .HasMaxLength(10)
                     .HasColumnName("unidad_medida");
 
@@ -833,7 +842,6 @@ namespace AccesoDatos
                 entity.Property(e => e.IdProducto).HasColumnName("id_producto");
 
                 entity.Property(e => e.Imagen)
-                    .IsRequired()
                     .HasMaxLength(500)
                     .HasColumnName("imagen");
 

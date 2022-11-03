@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Servicios.Interfaces;
 using Google.Cloud.Storage.V1;
 using Google.Apis.Auth.OAuth2;
+using Newtonsoft.Json.Linq;
 
 namespace Servicios.Servicios
 {
@@ -28,9 +29,13 @@ namespace Servicios.Servicios
         {
             try
             {
-                prod.Imagen = urlBucket + bucket + "/" + prod.Nombrearchivo;
-                SubirProducto(prod.Archivobase64, prod.Nombrearchivo);
-                
+                if(prod.Imagen != null)
+                {
+                    prod.Imagen = urlBucket + bucket + "/" + prod.Nombrearchivo;
+                    SubirProducto(prod.Archivobase64, prod.Nombrearchivo);
+
+                }
+
                 _dataBaseContext.Add(prod);
                 prod.Archivobase64 = "";
                 await _dataBaseContext.SaveChangesAsync();
@@ -64,7 +69,44 @@ namespace Servicios.Servicios
         {
             try
             {
-                return new ObjectResult(await _dataBaseContext.Productos.ToListAsync()) { StatusCode = 200 };
+                var x = await _dataBaseContext.Productos
+                                            .Include(n => n.Lotes)
+                                            .ThenInclude(m => m.IdBodegaNavigation)
+                                            .ThenInclude(r => r.IdSucursalNavigation).ToListAsync();
+
+                JArray arreglo = new JArray();
+                
+                foreach(var item in x)
+                {
+                    
+                    string query = @"select sucu.nombre 'key', sum(lote.exitencia) valor from lotes lote
+join bodegas bode on lote.id_bodega = bode.id_bodega
+join sucursales sucu on bode.id_sucursal = sucu.id_sucursal
+where lote.id_producto= " + item.IdProducto+@"
+group by sucu.nombre";
+                    var valores = _dataBaseContext.valores.FromSqlRaw(query);
+                    JArray vals = new JArray();
+                    foreach(var r in valores)
+                    {
+                        vals.Add(new JObject()
+                        {
+                            ["sucursal"] = r.key,
+                            ["cantidad"] = r.valor
+                    });
+                    }
+                    
+                    
+                    JObject obj = new JObject()
+                    {
+                        ["nombre"] = item.Nombre,
+                        ["imagen"] = item.Imagen,
+                        ["existencias"] = vals
+                    };
+                    arreglo.Add(obj);
+                }
+
+                
+                return new ObjectResult(arreglo) { StatusCode = 200 };
             }catch (Exception ex)
             {
                 return _errores.respuestaDeError("Error al momento de listar los productos", ex);

@@ -12,5 +12,6 @@ namespace Servicios.Interfaces
     {
         public Task<IActionResult> AgregarExamenesCaso(ExamenesCaso examenCaso);
         public Task<IActionResult> GetExamenesCaso(int idCaso);
+        public Task<IActionResult> GetExamenes(string nombre);
     }
 }

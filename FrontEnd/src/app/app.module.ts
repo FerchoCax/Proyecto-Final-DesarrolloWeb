@@ -69,6 +69,7 @@ import { HabitacionesComponent } from './components/habitaciones/habitaciones.co
 import { ClinicasComponent } from './components/clinicas/clinicas.component';
 import { DiagnosticosCasosComponent } from './components/diagnosticos-casos/diagnosticos-casos.component';
 import { CitasComponent } from './components/citas/citas.component';
+import { IngresarCitaComponent } from './components/ingresar-cita/ingresar-cita.component';
 
 
 
@@ -95,8 +96,9 @@ import { CitasComponent } from './components/citas/citas.component';
     DashboardCamasComponent,
     HabitacionesComponent,
     ClinicasComponent,
-    DiagnosticosCasosComponent
-    CitasComponent
+    DiagnosticosCasosComponent,
+    CitasComponent,
+    IngresarCitaComponent
   ],
   entryComponents: [],
   imports: [

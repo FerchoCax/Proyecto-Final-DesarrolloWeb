@@ -53,5 +53,19 @@ namespace Servicios.Servicios
             }
         }
 
+        public async Task<IActionResult> GetExamenes(string nombre)
+        {
+            try
+            {
+
+                var x = await _dataBaseContext.Examenes.Where(e => e.Nombre.ToUpper().Contains(nombre.ToUpper())).ToListAsync();
+                return new ObjectResult(x) { StatusCode = 200 };
+            }
+            catch(Exception ex)
+            {
+                return _error.respuestaDeError("Error al momento de lisar los examenes", ex);
+            }
+        }
+
     }
 }

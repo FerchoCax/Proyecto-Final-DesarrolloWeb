@@ -29,7 +29,8 @@ dataSourceDiagnostico:MatTableDataSource<Diagnostico>
 @ViewChild(MatTable) tableDiagnosticos:MatTable<Diagnostico>
 columnasTablaDiagnosticos:string[]=['nombre','accion']
 
-constructor(private servicioPacientes: PacientesService, private servicioDiagnosticos: DiagnosticosService ) { }
+constructor(private servicioPacientes: PacientesService, 
+  private servicioDiagnosticos: DiagnosticosService ) { }
   
   ngOnInit(): void {
   }

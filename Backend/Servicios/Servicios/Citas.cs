@@ -37,6 +37,52 @@ namespace Servicios.Servicios
         {
             try
             {
+                using var transaciont = _databaseContext.Database.BeginTransaction();
+                var recetas = await _databaseContext.Recetas.ToListAsync();
+                var citaExis = await _databaseContext.Citas.Where(e => e.IdCita == cita.IdCita).FirstOrDefaultAsync();
+                int maxReceta = 0;
+                if(recetas.Count > 0)
+                {
+                    maxReceta = recetas.Max(e => e.IdReceta);
+                }
+                foreach(var rec in cita.Receta)
+                {
+                    
+                    _databaseContext.Recetas.Add(rec);
+                    _databaseContext.SaveChanges();
+                    
+                }
+                foreach (var rec in cita.Receta)
+                {
+                    
+                    foreach (var med in rec.MedicamentosReceta)
+                    {
+                        MedicamentosRecetum medica = new MedicamentosRecetum();
+                        medica.IdReceta = rec.IdReceta;
+                        medica.IdProducto = med.IdProducto;
+                        _databaseContext.MedicamentosReceta.Add(medica);
+
+                    }
+                }
+                citaExis.Observaciones = cita.Observaciones;
+                
+                _databaseContext.Entry(citaExis).State = EntityState.Modified;
+                _databaseContext.SaveChanges();
+                foreach(var diag in cita.DiagnosticosCita)
+                {
+                    _databaseContext.DiagnosticosCita.Add(diag);
+                    _databaseContext.SaveChanges();
+                }
+                foreach(var ex in cita.ExamenesCasos)
+                {
+                    _databaseContext.ExamenesCasos.Add(ex);
+                    _databaseContext.SaveChanges();
+                }
+
+                await _databaseContext.SaveChangesAsync();
+
+                transaciont.Commit();
+
                 return new ObjectResult(new { estado = 1 }) { StatusCode = 200 };
             }
             catch (Exception ex)
@@ -52,7 +98,11 @@ namespace Servicios.Servicios
                                             join caso in _databaseContext.Casos on pacientes.IdPaciente equals caso.IdPaciente
                                             join cita in _databaseContext.Citas on caso.IdCaso equals cita.IdCaso
                                             select
-                                            cita).ToListAsync();
+                                            cita)
+                                            .Include(n => n.IdClinicaNavigation)
+                                            .ThenInclude(m => m.IdSucursalNavigation)
+                                            .Include(n => n.IdCasoNavigation)
+                                            .ThenInclude(m => m.IdPacienteNavigation).ToListAsync();
                 return new ObjectResult(historialCitas) { StatusCode = 200 };
             }
             catch (Exception ex)

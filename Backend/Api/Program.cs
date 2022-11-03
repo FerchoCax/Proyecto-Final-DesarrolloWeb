@@ -34,7 +34,12 @@ builder.Services.AddScoped<IIBodegasLotes,LotesBodegas>();
 builder.Services.AddScoped<IPacientes,Pacientes>();
 builder.Services.AddScoped<IClientes, Clientes>();
 builder.Services.AddScoped<IDiagnosticos, Diagnosticos>();
-
+builder.Services.AddScoped<ICitas, Citas>();
+builder.Services.AddScoped<IExamenes, Examenes>();
+builder.Services.AddSignalR().AddHubOptions<HubCamasController>(hubOptions =>
+{
+    hubOptions.EnableDetailedErrors = true;
+});
 
 var app = builder.Build();
 

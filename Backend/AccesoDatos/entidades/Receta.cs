@@ -14,7 +14,7 @@ namespace AccesoDatos
 
         public int IdReceta { get; set; }
         public int IdCita { get; set; }
-        public int IdUsuario { get; set; }
+        public int? IdUsuario { get; set; }
 
         public virtual Cita IdCitaNavigation { get; set; }
         public virtual Usuario IdUsuarioNavigation { get; set; }
