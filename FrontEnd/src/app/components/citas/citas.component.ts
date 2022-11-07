@@ -114,6 +114,11 @@ export class CitasComponent implements OnInit {
       .subscribe(result => {
         this.dataSucursal = <Sucursale[]>result
         console.log(this.dataSucursal)  
+  },error =>{
+    Swal.fire({
+      title:'Error',
+      icon:'error'
+    })
   })}
 
   cargarClinicas(){

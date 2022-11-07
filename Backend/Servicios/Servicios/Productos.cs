@@ -98,8 +98,11 @@ group by sucu.nombre";
                     
                     JObject obj = new JObject()
                     {
+                        ["id"] = item.IdProducto,
                         ["nombre"] = item.Nombre,
                         ["imagen"] = item.Imagen,
+                        ["open"] = false,
+                        
                         ["existencias"] = vals
                     };
                     arreglo.Add(obj);

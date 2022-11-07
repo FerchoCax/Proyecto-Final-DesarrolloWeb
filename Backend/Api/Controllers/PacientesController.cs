@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using AccesoDatos;
 using Servicios.Interfaces;
+using Microsoft.EntityFrameworkCore;
+
 namespace Api.Controllers
 {
     [ApiController]
@@ -8,9 +10,11 @@ namespace Api.Controllers
     public class PacientesController : Controller
     {
         public IPacientes _paciente;
-        public PacientesController(IPacientes pac)
+        private DataBaseContext _dataBaseContext;
+        public PacientesController(IPacientes pac, DataBaseContext ctx)
         {
             _paciente = pac;
+            _dataBaseContext = ctx;
         }
 
 
@@ -51,6 +55,24 @@ namespace Api.Controllers
         public async Task<IActionResult> BuscarPacienteCasoAbierto(string nombre)
         {
             return await _paciente.ListarPacientesCasoAbierto(nombre);
+        }
+
+        [HttpGet("GetTodosPacientesCasoHabierto")]
+        public async Task<IActionResult> BuscarPacienteCasoAbierto()
+        {
+            var clientes = await (from casos in _dataBaseContext.Casos
+                                  join paciente in _dataBaseContext.Pacientes on casos.IdPaciente equals paciente.IdPaciente
+                                  where
+                                  casos.MotivoFinalizacion == null
+                                  && casos.FechaFin == null
+                                  
+                                  select new
+                                  {
+                                      paciente,
+                                      casos.IdCaso
+                                  }).ToListAsync();
+
+            return Ok(clientes);
         }
     }
 }

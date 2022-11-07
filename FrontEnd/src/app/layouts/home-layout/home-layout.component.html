@@ -81,6 +81,12 @@
                     <mat-icon mat-list-icon>bedroom_parent</mat-icon>
                     <span *ngIf="isExpanded" class="span-link">Habitaciones</span>
                 </mat-list-item>
+
+                <mat-list-item style="height: 45px;"
+                    (click)="GoTo('CitasOfline')" style="color: var(--primary-text-color);">
+                    <mat-icon mat-list-icon>wifi_off</mat-icon>
+                    <span *ngIf="isExpanded" class="span-link">Citas Sin conexion</span>
+                </mat-list-item>
                 
             </mat-nav-list>
             

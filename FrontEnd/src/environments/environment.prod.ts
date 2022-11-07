@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
-  apiUrl: 'http://localhost:44311/api',
+  apiUrl: 'https://apiclinicadesaweb.azurewebsites.net',
 };
  

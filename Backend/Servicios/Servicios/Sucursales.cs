@@ -40,7 +40,9 @@ namespace Servicios.Servicios
         {
             try
             {
-                List<Sucursale> sucursales = await _context.Sucursales.ToListAsync();
+                List<Sucursale> sucursales = await _context.Sucursales
+                                                    .Include(n => n.Clinicas)
+                                                    .ToListAsync();
                 return new ObjectResult(sucursales) { StatusCode = 200 };
             }
             catch (Exception ex)

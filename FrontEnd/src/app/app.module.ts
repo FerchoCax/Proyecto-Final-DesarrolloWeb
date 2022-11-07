@@ -45,7 +45,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { CookieService } from 'ngx-cookie-service';
 import { MatBadgeModule } from '@angular/material/badge';
 import { ReportViewerModule } from 'ngx-ssrs-reportviewer';
-import { ZXingScannerModule } from '@zxing/ngx-scanner';
+// import { ZXingScannerModule } from '@zxing/ngx-scanner';
 import { NgxQRCodeModule } from '@techiediaries/ngx-qrcode';
 import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
 import { SelectorCentroComponent } from './components/login/selector-centro/selector-centro.component';
@@ -70,6 +70,8 @@ import { ClinicasComponent } from './components/clinicas/clinicas.component';
 import { DiagnosticosCasosComponent } from './components/diagnosticos-casos/diagnosticos-casos.component';
 import { CitasComponent } from './components/citas/citas.component';
 import { IngresarCitaComponent } from './components/ingresar-cita/ingresar-cita.component';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { CitasOflineComponent } from './components/citas-ofline/citas-ofline.component';
 
 
 
@@ -98,12 +100,12 @@ import { IngresarCitaComponent } from './components/ingresar-cita/ingresar-cita.
     ClinicasComponent,
     DiagnosticosCasosComponent,
     CitasComponent,
-    IngresarCitaComponent
+    IngresarCitaComponent,
+    CitasOflineComponent
   ],
   entryComponents: [],
   imports: [
     NgxExtendedPdfViewerModule,
-    ZXingScannerModule,
     NgxQRCodeModule,
     ReportViewerModule,
     NgxBarcodeModule,
@@ -153,6 +155,12 @@ import { IngresarCitaComponent } from './components/ingresar-cita/ingresar-cita.
     MatBadgeModule,
     MatSliderModule,
     MatTreeModule,
+    ServiceWorkerModule.register('ngsw-worker.js', {
+      enabled: environment.production,
+      // Register the ServiceWorker as soon as the app is stable
+      // or after 30 seconds (whichever comes first).
+      registrationStrategy: 'registerWhenStable:30000'
+    }),
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

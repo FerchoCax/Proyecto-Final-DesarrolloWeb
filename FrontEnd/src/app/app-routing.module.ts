@@ -18,6 +18,7 @@ import { ClinicasComponent } from './components/clinicas/clinicas.component';
 import { DiagnosticosCasosComponent } from './components/diagnosticos-casos/diagnosticos-casos.component';
 import { CitasComponent } from './components/citas/citas.component';
 import { IngresarCitaComponent } from './components/ingresar-cita/ingresar-cita.component';
+import { CitasOflineComponent } from './components/citas-ofline/citas-ofline.component';
 
 const routes: Routes = [
   {
@@ -25,6 +26,11 @@ const routes: Routes = [
     component: HomeLayoutComponent,
     canActivate: [AuthGuard],
     children: [
+      {
+        path:'CitasOfline',
+        canActivate:[AuthGuard],
+        component:CitasOflineComponent
+      },
       {
         path:'Usuarios',
         canActivate:[AuthGuard],
